@@ -1,0 +1,17 @@
+{
+    "id": 10345,
+    "timestamp": "2025-01-07T14:25:00Z",
+    "type": "notification",
+    "user": {
+      "userId": 789,
+      "name": "Alex Johnson",
+      "email": "alex.johnson@example.com"
+    },
+    "content": {
+      "title": "System Update",
+      "body": "Your system has been successfully updated to version 2.5.1.",
+      "tags": ["update", "system", "notification"]
+    },
+    "read": false,
+    "priority": "high"
+}
