@@ -1,73 +1,78 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import './Homepage.scss';
-import Navbar from '../navbar/Navbar';
-
-interface MessageData {
-  id: number;
-  timestamp: string;
-  type: string;
-  user: {
-    userId: number;
-    name: string;
-    email: string;
-  };
-  content: {
-    title: string;
-    body: string;
-    tags: string[];
-  };
-  read: boolean;
-  priority: string;
-}
 
 const Homepage: React.FC = () => {
-  const [message, setMessage] = useState<MessageData | null>(null);
-  const [error, setError] = useState<string | null>(null);
+  const [formState, setFormState] = useState({
+    username: '',
+    password: '',
+  });
 
-  useEffect(() => {
-    const fetchMessage = async () => {
-      try {
-        const response = await fetch('http://localhost:4200/message');
-        if (!response.ok) {
-          throw new Error(`Error: ${response.status} ${response.statusText}`);
-        }
-        const data: MessageData = await response.json();
-        setMessage(data);
-      } catch (err: any) {
-        setError(err.message);
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setFormState({ ...formState, [name]: value });
+  };
+
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
+    try {
+      // Send a POST request to the auth endpoint
+      const response = await fetch('http://localhost:4200/auth', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formState),
+      });
+
+      const result = await response.text();
+
+      if (result.trim() === 'true') {
+        // Redirect to the dashboard if authentication is successful
+        window.location.href = 'http://www.google.com';
+      } else {
+        alert('Authentication failed. Please try again.');
       }
-    };
-
-    fetchMessage();
-  }, []);
+    } catch (error) {
+      console.error('Error during authentication:', error);
+      alert('An error occurred. Please try again later.');
+    }
+  };
 
   return (
-    <div className="parent">
-      <Navbar />
-      <h1>Welcome to the Homepage</h1>
-      <p>This is your starting point!</p>
-      {error ? (
-        <p style={{ color: 'red' }}>Failed to load message: {error}</p>
-      ) : message ? (
-        <div>
-          <h2>{message.content.title}</h2>
-          <p>{message.content.body}</p>
-          <p>
-            <strong>User:</strong> {message.user.name} ({message.user.email})
-          </p>
-          <p>
-            <strong>Priority:</strong> {message.priority}
-          </p>
-          <p>
-            <strong>Tags:</strong> {message.content.tags.join(', ')}
-          </p>
-          <p>
-            <strong>Timestamp:</strong> {new Date(message.timestamp).toLocaleString()}
-          </p>
-        </div>
-      ) : (
-        <p>Loading message...</p>
-      )}
+    <div>
+      <main>
+        <h1>Login to Continue</h1>
+        <form id="auth-form" onSubmit={handleSubmit}>
+          <div className="form-group">
+            <label htmlFor="username">Username</label>
+            <input
+              type="text"
+              id="username"
+              name="username"
+              placeholder="Enter your username"
+              required
+              value={formState.username}
+              onChange={handleInputChange}
+            />
+          </div>
+          <div className="form-group">
+            <label htmlFor="password">Password</label>
+            <input
+              type="password"
+              id="password"
+              name="password"
+              placeholder="Enter your password"
+              required
+              value={formState.password}
+              onChange={handleInputChange}
+            />
+          </div>
+          <button type="submit" className="btn">
+            Login
+          </button>
+        </form>
+      </main>
     </div>
   );
 };
