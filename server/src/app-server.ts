@@ -21,6 +21,6 @@ app.use(router)
 
 app.listen(port, () => {
   console.log(
-    "Server Running On Port " + port + ", Link = http://localhost:" + port
+    "Server Running On Port " + port + " | Link = http://localhost:" + port
   );
 });
