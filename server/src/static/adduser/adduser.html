@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>API Dashboard</title>
+    <title>Authenticator</title>
     <style>
         /* General Styles */
         body {
@@ -28,7 +28,7 @@
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
         main {
-            max-width: 600px;
+            max-width: 400px;
             width: 100%;
             margin-top: 30px;
             background: white;
@@ -43,17 +43,30 @@
             margin-bottom: 20px;
         }
         p {
-            font-size: 1.2em;
+            font-size: 1em;
             color: #555;
             margin-bottom: 30px;
         }
-        /* Button Styles */
-        .btn-container {
+        /* Form Styles */
+        form {
             display: flex;
-            flex-direction: row;
-            align-items: center;
-            justify-content: center;
+            flex-direction: column;
             gap: 15px;
+        }
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            text-align: left;
+        }
+        label {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        input {
+            padding: 10px;
+            font-size: 1em;
+            border: 1px solid #ddd;
+            border-radius: 8px;
         }
         .btn {
             background-color: #2563eb; /* Blue */
@@ -76,24 +89,25 @@
             background-color: #1d4ed8; /* Slightly Darker Blue */
             transform: translateY(1px);
         }
-        
     </style>
 </head>
 <body>
     <header>
-        API Dashboard
+        ADD USER
     </header>
     <main>
-        <h1>Welcome to The Backend</h1>
-        <p>Explore the available API endpoints for the project below:</p>
-        <div class="btn-container">
-            <a class="btn" href="/message">Demo Message</a>
-            <a class="btn" href="./../adduser/adduser.html">Add User</a>
-        </div>
-        <p><a class="btn" href="http://localhost:6900" target="_blank">Frontend</a></p>
+        <h1>Login to Continue</h1>
+        <form id="auth-form" method="post" action="/adduser">
+            <div class="form-group">
+                <label for="username">Username</label>
+                <input type="text" id="username" name="username" placeholder="Enter your username" required>
+            </div>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" placeholder="Enter your password" required>
+            </div>
+            <button type="submit" class="btn">ADD</button>
+        </form>
     </main>
-
-    <script src="dash.js"></script>
-    
 </body>
 </html>
