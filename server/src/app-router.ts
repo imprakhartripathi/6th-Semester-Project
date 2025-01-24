@@ -7,11 +7,11 @@ import adduserController from "./controllers/adduser-controller";
 
 const router = express.Router();
 
-router.post('/auth', authController)
+router.post('/auth', authController);
   
 router.get("/message", messageController);
 
-router.post("/adduser", adduserController)
+router.post("/adduser", adduserController);
 
 router.get("/user", (request, response) => {
     response.send(user)
